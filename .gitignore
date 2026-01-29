@@ -1,29 +1,25 @@
-# Виртуальное окружение
-venv/
-.env/
-.venv/
-
-# Байткод Python
+# Python cache
 __pycache__/
 *.py[cod]
 
-# Логи
-*.log
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
 
-# Настройки IDE (PyCharm)
+# PyCharm
 .idea/
 
-# Кэш и временные файлы
-*.tmp
-*.swp
+# Output artifacts
+AA_output/
+other/
+
+
+# Secrets
+.env
+
+
+# OS files
 .DS_Store
-
-# Тестовые артефакты
-.pytest_cache/
-.ipynb_checkpoints/
-.coverage
-htmlcov/
-
-html_cache/
-doc/
-
+Thumbs.db
