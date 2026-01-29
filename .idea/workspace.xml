@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f677ab84-ea1e-4aa4-959f-e1b5799917dc" name="Changes" comment="">
+    <list default="true" id="f677ab84-ea1e-4aa4-959f-e1b5799917dc" name="Changes" comment="Initials">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../2026-01_AI-BIT/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../2026-01_AI-BIT/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +23,8 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../2026-01_AI-BIT" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -30,30 +34,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python tests.Doctests in common.executor&quot;: &quot;Run&quot;,
-    &quot;Python.123.executor&quot;: &quot;Run&quot;,
-    &quot;Python.AA_scraper_01.executor&quot;: &quot;Run&quot;,
-    &quot;Python.aa_analytic.executor&quot;: &quot;Run&quot;,
-    &quot;Python.aa_api_client.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.aa_build_experience_model.executor&quot;: &quot;Run&quot;,
-    &quot;Python.aa_config.executor&quot;: &quot;Run&quot;,
-    &quot;Python.aa_html_parser.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.aa_location.executor&quot;: &quot;Run&quot;,
-    &quot;Python.aa_main.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.aa_normalize.executor&quot;: &quot;Run&quot;,
-    &quot;Python.aa_normalize_01.executor&quot;: &quot;Run&quot;,
-    &quot;Python.aa_utils.executor&quot;: &quot;Run&quot;,
-    &quot;Python.func_bit.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main_bit.executor&quot;: &quot;Run&quot;,
-    &quot;Python.stepstone_scraper.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/fmikh/OneDrive/Documents/00_MY_PRJ/2025-12_AI-BIT&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Notification.DisplayName-DoNotAsk-vcs.project.update.finished": "",
+    "Notification.DoNotAsk-vcs.project.update.finished": "true",
+    "Python tests.Doctests in common.executor": "Run",
+    "Python.123.executor": "Run",
+    "Python.AA_scraper_01.executor": "Run",
+    "Python.aa_analytic.executor": "Run",
+    "Python.aa_api_client.executor": "Debug",
+    "Python.aa_build_experience_model.executor": "Run",
+    "Python.aa_config.executor": "Run",
+    "Python.aa_html_parser.executor": "Debug",
+    "Python.aa_location.executor": "Run",
+    "Python.aa_main.executor": "Debug",
+    "Python.aa_normalize.executor": "Run",
+    "Python.aa_normalize_01.executor": "Run",
+    "Python.aa_utils.executor": "Run",
+    "Python.func_bit.executor": "Run",
+    "Python.main_bit.executor": "Run",
+    "Python.stepstone_scraper.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/fmikh/OneDrive/Documents/00_MY_PRJ/2025-12_AI-BIT"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\fmikh\OneDrive\Documents\00_MY_PRJ\2025-12_AI-BIT" />
@@ -77,7 +83,20 @@
       <option name="presentableId" value="Default" />
       <updated>1767637711014</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initials">
+      <option name="closed" value="true" />
+      <created>1769717375570</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1769717375570</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initials" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initials" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
