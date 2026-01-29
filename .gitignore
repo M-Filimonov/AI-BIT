@@ -16,11 +16,10 @@ env/
 .idea/
 
 # Output artifacts
-AA_output/
 other/
 other/*.joblib
 other/*.ipynb
-DDC/
+DOC/
 html_cache/
 
 # Secrets
