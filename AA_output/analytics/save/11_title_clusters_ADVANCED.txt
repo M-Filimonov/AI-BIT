@@ -1,0 +1,288 @@
+
+=== Title clusters for experience level: ADVANCED ===
+
+[ AI Automation Specialist ] — unzureichende Daten
+
+[ AI Product Manager ] — Clustering (n=10)
+
+ Cluster 0 (n=2)
+   Beruf: AI Product Manager
+   Schlüsselterme: product manager, product, manager
+    Beispiele:
+    - Senior Product Manager (m/f/d)
+    - Product Manager (m/w/d) Aviation
+
+ Cluster 1 (n=1)
+   Beruf: AI Product Manager
+   Schlüsselterme: services, manager
+    Beispiele:
+    - Contract Manager (m|f|d) Services
+
+ Cluster 2 (n=4)
+   Beruf: AI Product Manager
+   Schlüsselterme: manager
+    Beispiele:
+    - Solution Engineer / Application Manager - Transaction Reporting (m/w/d)
+    - ROG Brand & Go-to-Market Manager – Gaming Gear (m/w/d)
+    - Marketing Manager (m/f/d) All-rounder with Drive, Creativity & a Strong Revenue Focus
+    - Agentic Change Manager (f/m/d)
+
+ Cluster 3 (n=2)
+   Beruf: AI Product Manager
+   Schlüsselterme: product, manager
+    Beispiele:
+    - Product Assurance Manager (m/w/d)
+    - AI Product Evangelist (w/m/d)
+
+ Cluster 4 (n=1)
+   Beruf: AI Product Manager
+   Schlüsselterme: services, product manager, product, manager
+    Beispiele:
+    - Product Manager (f/m/d) for Grid Assets and services solutions
+
+[ AI Project Manager ] — Clustering (n=19)
+
+ Cluster 0 (n=7)
+   Beruf: AI Project Manager
+   Schlüsselterme: project manager, project, manager, ai, engineering, data, manager data
+    Beispiele:
+    - Technical Project Manager (m/w/d) Data & AI
+    - Project Manager Data Engineering  (m/w/d)
+    - Project Manager AI & Engineering (m/f/d),München,Ingolstadt
+    - Project Manager (f/m/d) People & Organization (HR) Strategic Projects
+    - Obsolescence Project Manager (m/w/d) Luftfahrt
+
+ Cluster 1 (n=3)
+   Beruf: AI Project Manager
+   Schlüsselterme: manager inhouse, inhouse consulting, consulting, inhouse, manager manager, manager
+    Beispiele:
+    - Manager / Senior Manager Inhouse Consulting - Post-Merger Integration (all genders)
+    - Manager / Senior Manager Inhouse Consulting - Life Science Sector (all genders) (full-/part-time)
+    - Manager / Senior Manager Inhouse Consulting (all genders)
+
+ Cluster 2 (n=3)
+   Beruf: AI Project Manager
+   Schlüsselterme: transformation, manager, office, project, project manager
+    Beispiele:
+    - Upskilling Manager DevOps Transformation (f/m/d)
+    - Project Manager Corporate Transformation Office (m/f/d)
+    - Business Transformation Manager (f/m/d)
+
+ Cluster 3 (n=2)
+   Beruf: AI Project Manager
+   Schlüsselterme: product manager, product, manager
+    Beispiele:
+    - UX Designer / Digital Product Manager m/w/d
+    - Product Manager (f/m/d): SAP Experience Content & Labs (SAP Industries & Experiences)
+
+ Cluster 4 (n=4)
+   Beruf: AI Project Manager
+   Schlüsselterme: manager, strategy, office, manager manager
+    Beispiele:
+    - Tendering Manager (m/w/d)
+    - Strategy & Operations Manager (m/f/d) - Executive Office
+    - Manager / Senior Manager - Global Culinary Strategy  (m/f/x)
+    - Channel GTM Manager  (w/m/d)
+
+[ Business Transformation Analyst ] — Clustering (n=16)
+
+ Cluster 0 (n=4)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: data, ntt data, data deutschland, deutschland, deutschland se, ntt, se, consultant
+    Beispiele:
+    - NTT DATA Deutschland SE: Senior Data Strategy Consultant (w/m/x)
+    - NTT DATA Deutschland SE: SAP AMS Service Delivery Manager (w/m/x)
+    - NTT DATA Deutschland SE: Microsoft Dynamics 365 Lead Solution Architect (w/m/x)
+    - NTT DATA Deutschland SE: (Senior) Managing Consultant Smart Manufacturing (w/m/x)
+
+ Cluster 1 (n=2)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: analyst, se, data
+    Beispiele:
+    - IT Data Analyst (m/w/d)
+    - (Senior) Actuarial Analyst Life (m/f/d) at Allianz SE
+
+ Cluster 2 (n=6)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: consultant, manager, business, transformation, data
+    Beispiele:
+    - Studienleiter:innen für das Projekt  „Zwischenräume gestalten - Führungskultur im Wandel entwickeln“
+    - Senior Consultant – Business Analyse & Prozessmanagement (m/w/d)
+    - Prozessmanager - Digitalisierung & Automatisierung (m/w/d)
+    - Division Manager Data, Analytics & AI (m/w/d) in Vollzeit
+    - Digital HR Expert (m/w/d)
+
+ Cluster 3 (n=2)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: se executive, executive, advisor, executive advisor, deutschland, ntt data, deutschland se, data deutschland
+    Beispiele:
+    - NTT DATA Deutschland SE: Executive Advisor Insurance (w/m/x)
+    - NTT DATA Deutschland SE: Executive Advisor Banking & Financial Services (w/m/x)
+
+ Cluster 4 (n=2)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: digitale, digitale transformation, transformation, business, analyst
+    Beispiele:
+    - Spezialist Digitale Transformation (m/w/d)
+    - Senior Business Analyst – Digitale Transformation & Prozessoptimierung (w/m/d)
+
+[ Digital Process Analyst ] — unzureichende Daten
+
+[ KI-Manager/in ] — Clustering (n=266)
+
+ Cluster 0 (n=5)
+   Beruf: KI-Manager/in
+   Schlüsselterme: office, office manager, geschäftsführung, manager, assistenz, facility, woche, team
+    Beispiele:
+    - Persönliche Assistenz - Office Manager - Assistenz der Geschäftsführung - Team (m/w/d)
+    - Office Manager:in (m/w/d) Teilzeit 15h/Woche
+    - Office Manager/in – rechte Hand der Geschäftsführung (m/w/d) Vollzeit / Teilzeit
+    - Office Manager (w/m/d)
+    - Office & Facility Manager (m/w/d) in Teilzeit (ca. 20 Std/Woche)
+
+ Cluster 1 (n=15)
+   Beruf: KI-Manager/in
+   Schlüsselterme: manager, data
+    Beispiele:
+    - Tender Manager (m/w/d)
+    - Senior Projektportfolio Manager (m/w/d)
+    - Senior Controlling Manager (m/w/d)
+    - QA-Manager (m/w/d)
+    - Produktdaten Manager - PIM / Data Manager - PIM (w/m/d)
+
+ Cluster 2 (n=3)
+   Beruf: KI-Manager/in
+   Schlüsselterme: ki campus, den, den ki, campus heilbronn, campus, heilbronn, teamleiter, ki
+    Beispiele:
+    - Teamleiter Planung für den KI-Campus, Heilbronn (m/w/d)
+    - Teamleiter Bauausführung und Technik für den KI-Campus, Heilbronn (m/w/d)
+    - Commercial Manager / Senior Projekt-Controller für den KI-Campus, Heilbronn (m/w/d)
+
+ Cluster 3 (n=23)
+   Beruf: KI-Manager/in
+   Schlüsselterme: ki, ki manager, ki consultant, consultant, automatisierung, engineer, manager, marketing
+    Beispiele:
+    - Testmanager – Schwerpunkt KI (m/w/d)  (Voll- oder Teilzeit)
+    - Softwareentwickler – KI & Automatisierung (m/w/d)
+    - Senior Engineer | Generative KI und Automotive KI-Agenten (m/w/d), München
+    - Projektmanager KI & Prozessautomati-sierung (w/m/d) Mittelthüringen
+    - Partnermanager – KI-basierte Dokumentenprozesse (m/w/d)
+
+ Cluster 4 (n=220)
+   Beruf: KI-Manager/in
+   Schlüsselterme: manager, marketing, marketing manager, ki, data, digital, online, product
+    Beispiele:
+    - eCommerce Technical Manager*in für JTL (m/w/d) in Vollzeit
+    - e-Marketing Fachkraft (m/w/d)
+    - Werksstratege und Lean Management Experte (w/m/div.)
+    - Web & Digital Manager (m/w/d)  Schwerpunkt Website, Content, SEO & KI
+    - UX Manager Online Shops in Teilzeit 20-30 Wochenstunden (m/w/d)
+
+[ KI-Prompter ] — Clustering (n=6)
+
+ Cluster 0 (n=3)
+   Beruf: KI-Prompter
+   Schlüsselterme: (keine Terme)
+    Beispiele:
+    - Practice Lead für künstliche Intelligenz (w/m/d) / 16669
+    - PhD – Generative Models for Closed-loop Synthesis
+    - KI-Spezialist (m/w/d)
+
+ Cluster 1 (n=2)
+   Beruf: KI-Prompter
+   Schlüsselterme: fashion street, street one, street, one, one cecil, isernhagen, fashion, cecil isernhagen
+    Beispiele:
+    - Video Editor Fashion (m/w/d) - Street One und CECIL in Isernhagen
+    - Mediengestalter / Bildbearbeiter Fashion (m/w/d) - Street One und CECIL in Isernhagen
+
+ Cluster 2 (n=1)
+   Beruf: KI-Prompter
+   Schlüsselterme: street one, street, one cecil, one, isernhagen, fashion, cecil isernhagen, cecil
+    Beispiele:
+    - Fashion Fotograf (m/w/d) - Street One und CECIL in Isernhagen
+
+[ Prompt Engineer ] — Clustering (n=12)
+
+ Cluster 0 (n=5)
+   Beruf: Prompt Engineer
+   Schlüsselterme: ai, engineer, ai engineer, generative
+    Beispiele:
+    - Senior AI Platform Security Engineer (f/m/x)
+    - Lead AI Engineer - Applied Generative AI & Emerging Technologies (f/m/x)
+    - AI Workflow & Content Engineer (m/w/d)
+    - AI Engineer (m/w/d)
+    - (Senior) (agentic) AI Engineer at AI CoE (f/m/d)
+
+ Cluster 1 (n=1)
+   Beruf: Prompt Engineer
+   Schlüsselterme: generative, ki, engineer
+    Beispiele:
+    - Prompt Engineer - Generative KI (m/w/d)
+
+ Cluster 2 (n=2)
+   Beruf: Prompt Engineer
+   Schlüsselterme: ki
+    Beispiele:
+    - Softwareentwickler/in (m/w/d) KI-gestützte Softwareentwicklung
+    - Software Entwickler (m/w/d) für KI-Systeme
+
+ Cluster 3 (n=2)
+   Beruf: Prompt Engineer
+   Schlüsselterme: data, engineer, ai engineer, ai
+    Beispiele:
+    - Data Scientist / Machine Learning Engineer (m/w/d) (Voll- oder Teilzeit)
+    - Data & AI Engineer
+
+ Cluster 4 (n=2)
+   Beruf: Prompt Engineer
+   Schlüsselterme: stack developer, stack, full, full stack, developer ai, developer, ai
+    Beispiele:
+    - Senior Full Stack Developer AI (m/w/d)
+    - Senior Full Stack Developer AI (m/w/d)
+
+[ Prozessmanager/in ] — Clustering (n=301)
+
+ Cluster 0 (n=2)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: strom, strom gas, prozessmanager strom, gas, prozessmanager
+    Beispiele:
+    - Prozessmanager (m/w/d) Strom / Gas
+    - Prozessmanager (m/w/d) Strom / Gas
+
+ Cluster 1 (n=3)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: specialist, process, digital, process manager, manager
+    Beispiele:
+    - Senior Specialist Process Designer (m/w/d)
+    - Digital Process Specialist (m/w/d)
+    - Digital Finance Process Manager (w/m/d)
+
+ Cluster 2 (n=58)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: prozessmanager
+    Beispiele:
+    - Stream Lead / Prozessmanager (m/w/d) Corporate Functions
+    - Strategischer Prozessmanager (m/w/d), DE - Sengenthal (Lkr. Neumarkt i.d.OPf.)
+    - Senior Prozessmanager *in, Alnatura Campus Darmstadt
+    - Senior Prozessmanager (m/w/d) bei M-net
+    - Senior Prozessmanager (m/w/d)
+
+ Cluster 3 (n=23)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: manager, process, process manager, business process, business, lean, lean manager, prozess
+    Beispiele:
+    - algorismic gmbh: Project Manager (d/f/m)
+    - Technical Business Process Manager / SAP Key User (m/w/d)
+    - Senior Process Manager (m/f/d)
+    - Prozessmanager / Projektmanager / Business Process Manager (m/w/d)
+    - Prozessmanager / Projektmanager / Business Process Manager (m/w/d)
+
+ Cluster 4 (n=215)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: prozessmanager, prozessingenieur, it, projekt, projekt prozessmanager, it prozessmanager, logistik, mitarbeiter
+    Beispiele:
+    - mgm technology partners GmbH: Low-Code Business Analyst (m/w/d)
+    - mgm technology partners GmbH: Business Analyst / Prozessdesigner Public Sector (m/w/d)
+    - Wirtschaftsingenieur (m/w/d) Produktionsplanung
+    - Vertriebs- und Zerspanungsprofi (m/w/d), Schwerpunkt Frästechnik im W+F-bau
+    - Verfahrensingenieur Entwicklung Versorgungssysteme für

@@ -1,0 +1,29 @@
+# Виртуальное окружение
+venv/
+.env/
+.venv/
+
+# Байткод Python
+__pycache__/
+*.py[cod]
+
+# Логи
+*.log
+
+# Настройки IDE (PyCharm)
+.idea/
+
+# Кэш и временные файлы
+*.tmp
+*.swp
+.DS_Store
+
+# Тестовые артефакты
+.pytest_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+html_cache/
+doc/
+

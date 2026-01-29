@@ -1,0 +1,23 @@
+
+=== Semantische Gruppierung von Fähigkeiten (soft_skills) ===
+
+--- Cluster 0 ---
+ - Self-Organization
+
+--- Cluster 1 ---
+ - Communication
+ - Problem Solving
+ - Ownership
+ - Collaboration
+
+--- Cluster 2 ---
+ - Analytical Thinking
+
+--- Cluster 3 ---
+ - Teamwork
+
+--- Cluster 4 ---
+ - Stakeholder Management
+
+--- Cluster 5 ---
+ - Leadership

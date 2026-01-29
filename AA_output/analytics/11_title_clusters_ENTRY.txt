@@ -1,0 +1,198 @@
+
+=== Title clusters for experience level: ENTRY ===
+
+[ AI Automation Specialist ] — unzureichende Daten
+
+[ AI Product Manager ] — unzureichende Daten
+
+[ AI Project Manager ] — unzureichende Daten
+
+[ Business Transformation Analyst ] — Clustering (n=5)
+
+ Cluster 0 (n=1)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: data, analytics
+    Beispiele:
+    - Internship Data Analytics
+
+ Cluster 1 (n=1)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: data, analyst
+    Beispiele:
+    - Data Analyst (m/w/d)
+
+ Cluster 2 (n=1)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: analytics
+    Beispiele:
+    - Product Analytics Engineer
+
+ Cluster 3 (n=1)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: (keine Terme)
+    Beispiele:
+    - Consultant – Business Analyse & Prozessmanagement (m/w/d)
+
+ Cluster 4 (n=1)
+   Beruf: Business Transformation Analyst
+   Schlüsselterme: analyst
+    Beispiele:
+    - Experienced Performance & Digital Controlling Analyst (f/m/d)
+
+[ Digital Process Analyst ] — unzureichende Daten
+
+[ Junior Automation Specialist ] — unzureichende Daten
+
+[ KI-Manager/in ] — Clustering (n=60)
+
+ Cluster 0 (n=17)
+   Beruf: KI-Manager/in
+   Schlüsselterme: sea, ai, customer, excellence, mitarbeiter, praktikant, data, data ai
+    Beispiele:
+    - Werkstudent*in (w/m/d) Strategy and Operational Excellence - Lifecycle Products
+    - Werkstudent Data & AI (w/m/d)
+    - Werkstudent Data & AI (w/m/d)
+    - Werkstudent (w/m/d) - Service Excellence Center
+    - Technischer Anwendungsberater/ Application Engineer (m/w/d)
+
+ Cluster 1 (n=17)
+   Beruf: KI-Manager/in
+   Schlüsselterme: manager, content, product, international, innovation, product manager, manager commerce, commerce
+    Beispiele:
+    - Technischer Produkt Manager (m/w/d) Traineeprogramm München
+    - Technischer Produkt Manager (m/w/d) Traineeprogramm Hamburg
+    - Teamassistenz / Junior Office Manager (m/w/d)
+    - Senior Manager (m|w|d) Internationales Steuerrecht in Augsburg
+    - Junior Project Manager E-Commerce (m/w/d)
+
+ Cluster 2 (n=16)
+   Beruf: KI-Manager/in
+   Schlüsselterme: ki, projekt, automatisierung, sales, ki projekt, saas, assistant, mitarbeiter
+    Beispiele:
+    - Werkstudent:in Aufbau KI-Assistent (m/w/d)
+    - Werkstudent:in (m/w/d) Sales Operations & Business Development – KI-Projekt CERA
+    - Werkstudent im Bereich KI (m/w/d)
+    - Werkstudent KI-Management und Plattform-Innovation (m/w/d)
+    - Werkstudent (m/w/d) KI & Automatisierung
+
+ Cluster 3 (n=5)
+   Beruf: KI-Manager/in
+   Schlüsselterme: ausbildung, kaufmann, 2026, ausbildung kaufmann, frau, kaufmann frau, it, commerce
+    Beispiele:
+    - Mediengestalter/Mediendesigner (m/w/d) mit Ausbildung oder Studium
+    - Ausbildung zum Kaufmann (m/w/d) für IT-System-Management 2026
+    - Ausbildung zum Elektroniker*in für  Geräte & Systeme (m/w/d)
+    - Ausbildung Kaufmann/-frau - Büromanagement 2026
+    - Ausbildung 2026 (m/w/d) Kaufmann/-frau - E-Commerce
+
+ Cluster 4 (n=5)
+   Beruf: KI-Manager/in
+   Schlüsselterme: marketing, online, bereich, manager
+    Beispiele:
+    - Werkstudenten (m/w/d) Marketing
+    - Werkstudent im Bereich Marketing (w/m/div.)
+    - Werkstudent (w/m/d) Performance-/Online-Marketing & CRM
+    - Praktikum Influencer-Marketing-Manager (m/w/d)
+    - Marketing & Kommunikation (m/w/d) – Werkstudent / Teilzeit
+
+[ KI-Prompter ] — Clustering (n=16)
+
+ Cluster 0 (n=12)
+   Beruf: KI-Prompter
+   Schlüsselterme: software developer, software, developer
+    Beispiele:
+    - Software (AI) Developer (f/m/d)
+    - Software (AI) Developer (f/m/d)
+    - Software (AI) Developer (f/m/d)
+    - Software (AI) Developer (f/m/d)
+    - Software (AI) Developer (f/m/d)
+
+ Cluster 1 (n=4)
+   Beruf: KI-Prompter
+   Schlüsselterme: ki
+    Beispiele:
+    - Werkstudent:in GenAI/KI – Strategie, Roadmap & Pilotierung (Wind, FFPV, Großspeicher) (m/w/d)
+    - Unterstützungskraft (m/w/d) Prozessmanagement / KI-Einführung
+    - Praktikum in der Entwicklung eines KI-gestützten Tools zur Erstellung technischer Dokumente
+    - PhD Student (m/w/d) - KI
+
+[ Prompt Engineer ] — Clustering (n=7)
+
+ Cluster 0 (n=2)
+   Beruf: Prompt Engineer
+   Schlüsselterme: prompt, prompt engineer, ki, engineer
+    Beispiele:
+    - KI-Spezialist/ Prompt-Engineer (m/w/d)
+    - Junior KI Prompt Engineer Automatisierung und Content Ops (m/w/d)
+
+ Cluster 1 (n=2)
+   Beruf: Prompt Engineer
+   Schlüsselterme: stack developer, stack, full, full stack, developer, developer ai, ai
+    Beispiele:
+    - (Junior) Full Stack Developer AI (m/w/d)
+    - (Junior) Full Stack Developer AI (m/w/d)
+
+ Cluster 2 (n=1)
+   Beruf: Prompt Engineer
+   Schlüsselterme: engineering, ai
+    Beispiele:
+    - Werkstudium AI Engineering (m/w/d)
+
+ Cluster 3 (n=1)
+   Beruf: Prompt Engineer
+   Schlüsselterme: engineer
+    Beispiele:
+    - Hyperautomation Engineer (m/w/d)
+
+ Cluster 4 (n=1)
+   Beruf: Prompt Engineer
+   Schlüsselterme: engineering
+    Beispiele:
+    - Werkstudent / Werkstudentin Data Engineering (m/w/d)
+
+[ Prozessmanager/in ] — Clustering (n=51)
+
+ Cluster 0 (n=2)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: prozessmanagement
+    Beispiele:
+    - Werkstudent*in (m/w/d) Prozessmanagement
+    - Praktikant:in für den Bereich Prozessmanagement in der Lebensversicherung (m/w/d)
+
+ Cluster 1 (n=5)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: fertigungsplaner, produktionsplaner
+    Beispiele:
+    - Produktionsplaner / Fertigungsplaner Lack / Oberfläche
+    - Fertigungsplaner (m/w/d)
+    - Fertigungsplaner (E-Planung) Industrial Engineering  (m/w/d)
+    - Fertigungsplaner  (m/w/d)
+    - Fertigungsplaner  (m/w/d)
+
+ Cluster 2 (n=3)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: produktion, mitarbeiter, prozessingenieur
+    Beispiele:
+    - Prozessingenieur (m/w/d) Produktion
+    - Mitarbeiter Qualitätssicherung Produktion (w/m/d)
+    - Datenanalyst (m/w/d) Produktion / Prozesse
+
+ Cluster 3 (n=35)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: prozessmanager, produktionsplaner, prozessentwickler, airbus, sap, gmbh, digitalisierung, einkauf
+    Beispiele:
+    - Technischer Mitarbeiter Digitalisierung und Prozessoptimierung (m/w/d)
+    - Strategischer Prozessplaner (m/w/d)
+    - Starrag GmbH, Produktbereich Heckert: Studienpraktikum im Produktionsprozess
+    - SAP Test- und Prozessingenieur (m/w/d)
+    - RPA Developer (m/w/d)
+
+ Cluster 4 (n=6)
+   Beruf: Prozessmanager/in
+   Schlüsselterme: ausbildung, 2026, elektroniker betriebstechnik, elektroniker, betriebstechnik, ausbildung elektroniker, ausbildung 2026, 09 2026
+    Beispiele:
+    - Ausbildungsberuf Fachkraft für Elektroniker für Betriebstechnik (m/w/d) Start 01.09.2026
+    - Ausbildung zum Elektroniker für Betriebstechnik (m/w/d) ab 01.09.2026
+    - Ausbildung zum Elektroniker für Betriebstechnik (m/w/d) 2026
+    - Ausbildung zum Elektroniker für Betriebstechnik (m/w/d)
+    - Ausbildung 2026 zum Elektroniker für Betriebstechnik (m/w/d)
