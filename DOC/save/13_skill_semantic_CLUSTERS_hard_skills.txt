@@ -1,0 +1,39 @@
+
+=== Semantische Gruppierung von Fähigkeiten (hard_skills) ===
+
+--- Cluster 0 ---
+ - UiPath
+ - PyTorch
+ - Python
+ - Low-Code
+ - Strategie
+ - Spark
+ - No-Code
+ - Make.com
+ - NoSQL
+ - Jira
+ - BPMN
+ - Digitalisierung
+ - TensorFlow
+ - MLOps
+ - Docker
+ - SQL
+ - Process Mining
+ - Agile
+ - Consulting
+ - Azure
+
+--- Cluster 1 ---
+ - SAP
+
+--- Cluster 2 ---
+ - n8n
+
+--- Cluster 3 ---
+ - GCP
+
+--- Cluster 4 ---
+ - Six Sigma
+
+--- Cluster 5 ---
+ - Scrum

@@ -1,0 +1,16 @@
+
+=== Repeated SOFT skill words by experience level ===
+
+Word	Entry	Advanced	Total
+collaboration	42	252	294
+ownership	24	168	192
+communication	23	172	195
+analytical	10	41	51
+thinking	10	41	51
+teamwork	5	27	32
+self-organization	5	26	31
+leadership	5	55	60
+problem	3	8	11
+solving	3	8	11
+stakeholder	1	56	57
+management	1	56	57

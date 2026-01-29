@@ -14,7 +14,8 @@ env/
 # Output artifacts
 AA_output/
 other/
-
+DDC/
+html_cache/
 
 # Secrets
 .env
