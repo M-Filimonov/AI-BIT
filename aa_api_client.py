@@ -2,13 +2,12 @@
 aa_api_client.py
 -----------------
 
-Клиент для обращения к API Arbeitsagentur (BA).
-Выполняет поиск вакансий по ключевым словам с поддержкой:
-- пагинации
-- backoff при ошибках
-- логирования
+Client for interacting with the Arbeitsagentur (BA) API.
+Performs vacancy search with support for:
+- pagination
+- retry with exponential backoff
+- logging
 """
-
 import time
 import logging
 import requests
@@ -26,21 +25,21 @@ from aa_config import (
 
 def aa_search(query: str, max_pages: int = MAX_PAGES, size: int = PAGE_SIZE, published_since: Optional[int] = None) -> List[Dict[str, Any]]:
     """
-    Выполняет поиск вакансий в API Arbeitsagentur по ключевому слову.
+    Performs a vacancy search in the Arbeitsagentur API using a keyword.
 
     Args:
-        query (str): Поисковый запрос.
-        max_pages (int): Максимальное количество страниц.
-        size (int): Размер страницы.
-        published_since (Optional[int]): Окно в днях для параметра veroeffentlichtseit.
-            Если None — используется DAYS_WINDOW из конфигурации.
+        query (str): Search query.
+        max_pages (int): Maximum number of pages to fetch.
+        size (int): Page size.
+        published_since (Optional[int]): Number of days for the 'veroeffentlichtseit' filter.
+            If None, the default DAYS_WINDOW from configuration is used.
 
     Returns:
-        List[Dict[str, Any]]: Список вакансий (сырые данные API).
+        List[Dict[str, Any]]: List of vacancies (raw API data).
     """
     rows: List[Dict[str, Any]] = []
 
-    # используем значение из аргумента или DAYS_WINDOW из конфига
+    # use the provided argument or fallback to DAYS_WINDOW from config
     window_days = int(published_since) if published_since is not None else int(DAYS_WINDOW)
     logging.info(f"[API] veroeffentlichtseit set to {window_days} days for query '{query}'")
 
@@ -58,6 +57,7 @@ def aa_search(query: str, max_pages: int = MAX_PAGES, size: int = PAGE_SIZE, pub
         delay = 1
         success = False
 
+        # retry with exponential backoff
         for attempt in range(3):
             try:
                 r = requests.get(AA_BASE_URL, headers=AA_HEADERS, params=params, timeout=30)
@@ -73,22 +73,23 @@ def aa_search(query: str, max_pages: int = MAX_PAGES, size: int = PAGE_SIZE, pub
             delay *= 2
 
         if not success:
-            logging.error(f"[API] Пропуск страницы {page} для '{query}' после 3 попыток")
+            logging.error(f"[API] Skipping page {page} for '{query}' after 3 failed attempts")
             break
 
         try:
             data = r.json()
         except ValueError:
-            logging.error(f"[API] Некорректный JSON для '{query}' page {page}")
+            logging.error(f"[API] Invalid JSON for '{query}' page {page}")
             break
 
+        # API sometimes returns 'stellenangebote' or 'jobs'
         items = data.get("stellenangebote") or data.get("jobs") or []
 
         if not items:
             break
 
         rows.extend(items)
-        logging.info(f"[API] query='{query}' page={page}: {len(items)} вакансий")
+        logging.info(f"[API] query='{query}' page={page}: {len(items)} vacancies")
 
         time.sleep(SLEEP_BETWEEN)
 

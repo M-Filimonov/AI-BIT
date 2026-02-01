@@ -1,3 +1,27 @@
+"""
+aa_location.py
+---------------------
+Geolocation and geographic analytics utilities for the project.
+
+Functionality includes:
+1. City name normalization
+2. Cached geocoding using Nominatim
+3. Coordinate enrichment for vacancy datasets
+4. City‑level and state‑level vacancy statistics
+5. Bar charts for cities and federal states
+6. Interactive geographic maps (Plotly)
+7. Experience‑level–specific geographic analysis
+8. Color palette resolution for visualizations
+
+This module is used by:
+- run_geo_analysis() in aa_main.py
+- geo_by_experience() in aa_analytic.py
+- city/state distribution charts
+- coordinate enrichment during analytics
+"""
+
+
+
 import re
 import pandas as pd
 from pathlib import Path
@@ -15,31 +39,31 @@ from aa_config import GERMAN_STATES, HTML_CACHE_DIR, OUT_DIR
 
 
 # ============================================================
-# Геокодирование с кэшем
+# Geocoding with caching
 # ============================================================
-
-from geopy.geocoders import Nominatim
 
 geolocator = Nominatim(user_agent="aa_job_market_analysis")
 CACHE_FILE = HTML_CACHE_DIR / "city_geocache.csv"
 
+
 def normalize_city(name: str) -> str:
-    """Единая нормализация названий городов."""
+    """Unified normalization of city names."""
     if not isinstance(name, str):
         return ""
     name = name.strip().lower()
 
-    # убираем скобки (Berlin (DE))
+    # remove parentheses (e.g., Berlin (DE))
     name = re.sub(r"\(.*?\)", "", name)
 
-    # убираем запятые и лишние пробелы
+    # remove commas and extra spaces
     name = name.replace(",", " ")
     name = re.sub(r"\s+", " ", name)
 
     return name.title()
 
+
 def load_geocache():
-    """Загружает кэш и нормализует названия городов."""
+    """Loads geocache and normalizes city names."""
     if CACHE_FILE.exists():
         df = pd.read_csv(CACHE_FILE)
         df["City"] = df["City"].astype(str).str.strip().str.title()
@@ -48,14 +72,14 @@ def load_geocache():
 
 
 def save_geocache(df: pd.DataFrame):
-    """Сохраняет кэш без NaN и без дублей."""
+    """Saves geocache without NaN values and without duplicates."""
     df = df.dropna(subset=["Latitude", "Longitude"])
     df = df.drop_duplicates(subset=["City"])
     df.to_csv(CACHE_FILE, index=False)
 
 
 def geocode_city(city: str, retries=2):
-    """Геокодирует один город."""
+    """Geocodes a single city name."""
     if not city:
         return None, None
 
@@ -72,73 +96,72 @@ def geocode_city(city: str, retries=2):
 
 
 # ============================================================
-# enrich_with_coordinates - вызывается в prepare_city_stats
+# enrich_with_coordinates — used in prepare_city_stats
 # ============================================================
 
 def enrich_with_coordinates(city_stats: pd.DataFrame):
     """
-    Надёжное добавление координат:
-    - нормализует все названия городов
-    - загружает и нормализует кэш
-    - определяет только новые города
-    - геокодирует только новые
-    - обновляет кэш
-    - возвращает city_stats с координатами
+    Robust coordinate enrichment:
+    - normalizes all city names
+    - loads and normalizes geocache
+    - identifies only new cities
+    - geocodes only new entries
+    - updates geocache
+    - returns city_stats with coordinates
     """
 
-    # --- 1. Нормализация входных данных ---
+    # --- 1. Normalize input data ---
     city_stats = city_stats.copy()
     city_stats["City"] = city_stats["City"].astype(str).apply(normalize_city)
 
-    # --- 2. Загружаем и нормализуем кэш ---
+    # --- 2. Load and normalize cache ---
     cache = load_geocache().copy()
     cache["City"] = cache["City"].astype(str).apply(normalize_city)
 
-    # удаляем дубли после нормализации
+    # remove duplicates after normalization
     cache = cache.drop_duplicates(subset=["City"])
 
     cached_cities = set(cache["City"])
     all_cities = set(city_stats["City"])
 
-    # --- 3. Определяем новые города ---
+    # --- 3. Determine new cities ---
     new_cities = sorted(all_cities - cached_cities)
 
-    print(f"[INFO] Всего городов: {len(all_cities)}")
-    print(f"[INFO] В кэше: {len(cached_cities)}")
-    print(f"[INFO] Новых городов для геокодинга: {len(new_cities)}")
+    print(f"[INFO] Total cities: {len(all_cities)}")
+    print(f"[INFO] Cached cities: {len(cached_cities)}")
+    print(f"[INFO] New cities to geocode: {len(new_cities)}")
 
-    # --- 4. Геокодируем только новые ---
+    # --- 4. Geocode only new cities ---
     new_rows = []
     for city in tqdm(new_cities, desc="Geocoding new cities", unit="city"):
         lat, lon = geocode_city(city)
         if lat and lon:
             new_rows.append({"City": city, "Latitude": lat, "Longitude": lon})
 
-    # --- 5. Обновляем кэш ---
+    # --- 5. Update cache ---
     if new_rows:
         new_df = pd.DataFrame(new_rows)
         cache = pd.concat([cache, new_df], ignore_index=True)
 
-        # финальная очистка
+        # final cleanup
         cache = cache.dropna(subset=["Latitude", "Longitude"])
         cache = cache.drop_duplicates(subset=["City"])
 
         save_geocache(cache)
 
-    # --- 6. Мержим координаты в city_stats ---
+    # --- 6. Merge coordinates into city_stats ---
     merged = city_stats.merge(cache, on="City", how="left")
 
-    # --- 7. Возвращаем только города с координатами ---
+    # --- 7. Return only cities with coordinates ---
     return merged.dropna(subset=["Latitude", "Longitude"])
 
 
-
 # ============================================================
-# Подготовка статистики по городам: prepare_city_stats и prepare_city_stats_by_level
-# вызывается в run_geo_analysis, prepare_city_stats_by_level
+# City statistics preparation — used in run_geo_analysis
 # ============================================================
 
 def prepare_city_stats(df: pd.DataFrame):
+    """Aggregates vacancy counts by city and enriches them with coordinates."""
     city_stats = (
         df.dropna(subset=["city"])
           .groupby("city", as_index=False)
@@ -147,13 +170,9 @@ def prepare_city_stats(df: pd.DataFrame):
     )
     return enrich_with_coordinates(city_stats)
 
-# ============================================================
-# prepare_city_stats_by_level - вызывается в run_geo_analysis
-# ============================================================
-# def prepare_city_stats_by_level(df: pd.DataFrame, level: str):
-#     return prepare_city_stats(df[df["experience_level"] == level])
 
 def prepare_city_stats_by_level(df: pd.DataFrame, level: str):
+    """Filters by experience level and prepares city statistics."""
     if level is None:
         return prepare_city_stats(df)
     lvl = str(level).strip().lower()
@@ -161,10 +180,11 @@ def prepare_city_stats_by_level(df: pd.DataFrame, level: str):
 
 
 # ============================================================
-# Bar‑chart: Top‑25 Städte - вызывается в run_geo_analysis, aa_analytic.run_analytics
+# Bar chart: Top‑25 cities — used in run_geo_analysis, aa_analytic.run_analytics
 # ============================================================
 
 def city_distribution(df: pd.DataFrame, top_n=25, suffix="All", palette="Greys_r", color=None):
+    """Plots a bar chart of the top N cities by vacancy count."""
     counts = (
         df["city"]
         .dropna()
@@ -201,9 +221,11 @@ def city_distribution(df: pd.DataFrame, top_n=25, suffix="All", palette="Greys_r
 
 
 # ============================================================
-# Bar‑chart: Top‑16 Länder - вызывается в run_geo_analysis, aa_analytic.run_analytics
+# Bar chart: Top‑16 states — used in run_geo_analysis, aa_analytic.run_analytics
 # ============================================================
+
 def state_distribution(df: pd.DataFrame, top_n=16, suffix="All", palette="Purples_r", color=None):
+    """Plots a bar chart of the top N German states by vacancy count."""
     counts = (
         df["state"]
         .dropna()
@@ -239,10 +261,11 @@ def state_distribution(df: pd.DataFrame, top_n=16, suffix="All", palette="Purple
 
 
 # ============================================================
-# Интерактивная карта Германии -  вызывается в run_geo_analysis
+# Interactive Germany map — used in run_geo_analysis
 # ============================================================
 
 def vacancy_map(city_stats: pd.DataFrame, title: str, filename: str):
+    """Creates an interactive map of vacancies across Germany."""
     fig = px.scatter_map(
         city_stats,
         lat="Latitude",
@@ -263,14 +286,14 @@ def vacancy_map(city_stats: pd.DataFrame, title: str, filename: str):
     fig.write_html(out_path / filename)
 
 
-
 # ============================================================
-# Полный запуск гео‑аналитики, вызывается в aa_main.run_with_analytics
+# Full geo‑analytics pipeline — used in aa_main.run_with_analytics
 # ============================================================
 
 def run_geo_analysis(df: pd.DataFrame):
+    """Runs full geographic analytics: all, entry, advanced."""
 
-    # карта по всем вакансиям
+    # all vacancies
     city_stats_all = prepare_city_stats(df)
     vacancy_map(
         city_stats_all,
@@ -278,7 +301,7 @@ def run_geo_analysis(df: pd.DataFrame):
         "06_AA_geo_vacancy_map_ALL.html"
     )
 
-    # карта по Entry
+    # entry level
     city_stats_Entry = prepare_city_stats_by_level(df, "entry")
     vacancy_map(
         city_stats_Entry,
@@ -286,7 +309,7 @@ def run_geo_analysis(df: pd.DataFrame):
         "07_AA_geo_vacancy_map_ENTRY.html"
     )
 
-    # карта по Advanced
+    # advanced level
     city_stats_Advanced = prepare_city_stats_by_level(df, "advanced")
     vacancy_map(
         city_stats_Advanced,
@@ -296,9 +319,11 @@ def run_geo_analysis(df: pd.DataFrame):
 
 
 # ============================================================
-# geo_by_experience - вызывается в aa_analytic.run_analytics
+# geo_by_experience — used in aa_analytic.run_analytics
 # ============================================================
+
 def geo_by_experience(df: pd.DataFrame, level: str):
+    """Runs city/state distribution charts for a specific experience level."""
     if not isinstance(level, str):
         print("Level must be a string")
         return
@@ -306,12 +331,12 @@ def geo_by_experience(df: pd.DataFrame, level: str):
     df_lvl = df[df["experience_level"].astype(str).str.lower() == level.lower()]
 
     if df_lvl.empty:
-        print(f"Нет данных для уровня {level}")
+        print(f"No data for level {level}")
         return
 
     suffix = level.lower()
 
-    # палитры
+    # palettes
     if suffix == "entry":
         city_palette = "Oranges_r"
         state_palette = "Oranges_d"
@@ -324,31 +349,31 @@ def geo_by_experience(df: pd.DataFrame, level: str):
 
 
 # ============================================================
-# resolve_colors - вызывается в city_distribution, state_distribution
+# resolve_colors — used in city_distribution, state_distribution
 # ============================================================
+
 import matplotlib.colors as mcolors
+
 def resolve_colors(palette_or_color, n):
     """
-    Возвращает:
-      - список цветов длиной n (если palette_or_color — имя палитры или список),
-      - или одиночный валидный цвет (hex или named color) если palette_or_color — строка-цвет.
+    Returns:
+      - a list of n colors (if palette_or_color is a palette name or list),
+      - or a single valid color (hex or named) if palette_or_color is a color string.
     """
     if palette_or_color is None:
         return sns.color_palette("Oranges_r", n_colors=max(1, n))
 
-    # если передали список цветов
+    # list of colors
     if isinstance(palette_or_color, (list, tuple)):
         pal = list(palette_or_color)
         if len(pal) >= n:
             return pal[:n]
         return sns.color_palette(pal, n_colors=max(1, n))
 
-    # если передали строку
+    # string: either a color or a palette name
     if isinstance(palette_or_color, str):
-        # валидное имя цвета (hex или matplotlib named color)
         if mcolors.is_color_like(palette_or_color):
             return palette_or_color
-        # иначе пытаемся интерпретировать как имя палитры seaborn/matplotlib
         try:
             return sns.color_palette(palette_or_color, n_colors=max(1, n))
         except Exception:

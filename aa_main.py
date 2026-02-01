@@ -1,36 +1,35 @@
 """
 aa_main.py
 -----------------
-Главный модуль ETL‑пайплайна проекта.
+Main module of the project's ETL pipeline.
 
-Функции модуля:
+Module responsibilities:
 
-1) Поиск вакансий (API Arbeitsagentur)
-   - перебор SEARCH_TERMS
-   - многопоточный сбор результатов через ThreadPoolExecutor
+1) Vacancy search (Arbeitsagentur API)
+   - iterates over SEARCH_TERMS
+   - collects results concurrently via ThreadPoolExecutor
 
-2) Нормализация данных
-   - вызов normalize_aa_item()
-   - извлечение описания, навыков, опыта (ML), локации, метаданных
+2) Data normalization
+   - calls normalize_aa_item()
+   - extracts description, skills, experience (ML), location, metadata
 
-3) Фильтрация по дате
-   - оставляет только вакансии, опубликованные за последние DAYS_WINDOW дней
+3) Date filtering
+   - keeps only vacancies published within the last DAYS_WINDOW days
 
-4) Дедупликация
-   - удаление дублей по (job_title, company, location)
+4) Deduplication
+   - removes duplicates by (job_title, company, location)
 
-5) Сохранение результатов
-   - сортировка
-   - экспорт в XLSX (XLSX_PATH)
+5) Saving results
+   - sorting
+   - exporting to XLSX (XLSX_PATH)
 
-6) Аналитика
-   - run_analytics(): сводные таблицы, графики, статистика
-   - run_geo_analysis(): географический анализ вакансий
+6) Analytics
+   - run_analytics(): summary tables, charts, statistics
+   - run_geo_analysis(): geographic vacancy analysis
 
-Основные точки входа:
-- run_etl()              — полный процесс загрузки и нормализации
-- run_with_analytics()   — запуск аналитики на готовом XLSX
-
+Main entry points:
+- run_etl()              — full loading and normalization process
+- run_with_analytics()   — run analytics on the generated XLSX
 """
 
 
@@ -50,7 +49,7 @@ from aa_config import (
 )
 from aa_api_client import aa_search
 from aa_normalize import normalize_aa_item
-from aa_analytic import run_analytics   # ← правильный импорт
+from aa_analytic import run_analytics   # correct import
 from aa_location import run_geo_analysis
 
 
@@ -58,7 +57,7 @@ logging.basicConfig(level=LOG_LEVEL, format=LOG_FORMAT)
 
 
 def check_period(date_iso: str) -> bool:
-    """Проверяет, входит ли дата в последние DAYS_WINDOW дней."""
+    """Checks whether the date falls within the last DAYS_WINDOW days."""
     if not date_iso:
         return False
     try:
@@ -69,7 +68,7 @@ def check_period(date_iso: str) -> bool:
 
 
 def dedup(rows: List[Dict]) -> List[Dict]:
-    """Удаляет дубликаты по (job_title, company, location)."""
+    """Removes duplicates by (job_title, company, location)."""
     seen = set()
     out = []
     for r in rows:
@@ -85,20 +84,22 @@ def dedup(rows: List[Dict]) -> List[Dict]:
 
 
 def run_etl() -> None:
-    """Основной процесс выгрузки вакансий."""
+    """Main vacancy extraction and normalization process."""
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    all_rows: List[Dict] = [] # Инициализация накопителя
+    all_rows: List[Dict] = []  # accumulator
 
-    for term in SEARCH_TERMS: # Цикл по поисковым терминам
+    for term in SEARCH_TERMS:  # iterate over search terms
         logging.info(f"[TERM] {term}")
 
-        with ThreadPoolExecutor(max_workers=8) as pool: # Параллельный вызов поиска
+        # parallel API calls
+        with ThreadPoolExecutor(max_workers=8) as pool:
 
-            # вызываем aa_search из aa_api_client.py и передаем запрос q из списка SEARCH_TERMS
+            # call aa_search from aa_api_client.py and pass q from SEARCH_TERMS
             futures = {pool.submit(aa_search, q): q for q in [term]}
 
-            for future in as_completed(futures): # Итерация по завершённым задачам с обработкой исключений
+            # iterate over completed tasks with exception handling
+            for future in as_completed(futures):
                 q = futures[future]
                 try:
                     items = future.result()
@@ -106,19 +107,20 @@ def run_etl() -> None:
                     logging.error(f"[THREAD ERROR] {q}: {e}")
                     continue
 
-                for it in items:  # Нормализация и фильтрация по дате (преобразование сырого API‑объекта в унифицированную структуру)
+                # normalization + date filtering (convert raw API object into unified structure)
+                for it in items:
                     row = normalize_aa_item(it, search_term=term)
                     if row and check_period(row["posted_date"]):
                         all_rows.append(row)
 
-    all_rows = dedup(all_rows) # Дедупликация
-    logging.info(f"Итого уникальных вакансий: {len(all_rows)}")
+    all_rows = dedup(all_rows)  # deduplication
+    logging.info(f"Total unique vacancies: {len(all_rows)}")
 
-    if not all_rows: # Проверка наличия данных
-        logging.warning("Нет данных для сохранения.")
+    if not all_rows:  # no data check
+        logging.warning("No data to save.")
         return
 
-    # Сортировка
+    # sorting
     all_rows.sort(
         key=lambda r: (
             r.get("job_title") or "",
@@ -128,27 +130,28 @@ def run_etl() -> None:
         reverse=True
     )
 
-    # запись в Excel файл
+    # write to Excel
     df = pd.DataFrame(all_rows)
     df = df.rename(columns={"description_full": "description"})
     df.to_excel(XLSX_PATH, index=False)
 
-    logging.info("Готово.")
+    logging.info("Done.")
     logging.info(f"XLSX:  {XLSX_PATH.resolve()}")
 
 
 def run_with_analytics():
-    """Запуск ETL + аналитики."""
+    """Runs ETL and then analytics."""
     run_etl()
 
-    ANALYTICS_DIR = OUT_DIR / "analytics" # Папка для аналитики
+    ANALYTICS_DIR = OUT_DIR / "analytics"  # analytics output folder
     ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
 
-    print("\n[INFO] Запуск аналитики...")
+    print("\n[INFO] Running analytics...")
     df = run_analytics(XLSX_PATH)
     run_geo_analysis(df)
-    print(f"[INFO] Аналитика завершена. Результаты сохранены в {ANALYTICS_DIR.resolve()}")
+    print(f"[INFO] Analytics completed. Results saved to {ANALYTICS_DIR.resolve()}")
 
 
 if __name__ == "__main__":
     run_with_analytics()
+

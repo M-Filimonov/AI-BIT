@@ -1,49 +1,48 @@
 """
 aa_normalize.py
 -----------------
-Нормализация вакансий Arbeitsagentur (BA).
+Normalization module for Arbeitsagentur (BA) vacancy data.
 
-Функция normalize_aa_item() объединяет данные из API и HTML‑страницы вакансии,
-очищает и структурирует текст, извлекает навыки, классифицирует уровень опыта
-через семантический анализ и парсит поле location.
+This module merges API fields with HTML‑parsed content, cleans and structures
+text fields, extracts skills, classifies experience level using multiple
+heuristics, and parses location metadata.
 
-Основные поля результата:
+Core responsibilities:
 
-Базовая информация:
-- job_title
-- beruf
-- company
-- job_url
-- posted_date
-- search_term
+1. Data merging
+   - combines API vacancy fields with HTML description blocks
+   - unifies raw text, structured sections, and fallback content
 
-Описание:
-- description_full
-- description_sections_json
-- description_sections_text
-- description_source
+2. Text processing
+   - cleans and normalizes description text
+   - extracts structured sections (JSON + plain text)
+   - determines description source (API / Website / Combined)
 
-Навыки и опыт:
-- hard_skills
-- soft_skills
-- work_experience (уровень по job_title)
-- experience_level (entry / advanced)
+3. Skill extraction
+   - identifies hard and soft skills
+   - extracts experience signals from text
 
-Локация:
-- location
-- index
-- city
-- state
-- country
-- address
+4. Experience classification
+   - title‑based heuristics
+   - regex‑based detection
+   - semantic scoring model
+   - unified mapping to entry / advanced classes
 
-Прочее:
-- salary
-- contract_type
-- html_filename
-- html_quality
-- source
-- normalized_at
+5. Location parsing
+   - extracts raw location fields
+   - parses index, city, state, country, address
+
+6. Output structure
+   Produces a fully normalized vacancy record with fields:
+   - job_title, beruf, company, job_url, posted_date, search_term
+   - description_full, description_sections_json, description_sections_text
+   - hard_skills, soft_skills, work_experience, experience_level
+   - location, index, city, state, country, address
+   - salary, contract_type
+   - html_filename, html_quality, source, normalized_at
+
+Main entry point:
+- normalize_aa_item() — full normalization pipeline for a single vacancy
 """
 
 import json
@@ -70,6 +69,7 @@ from aa_config import (
 # ------------------------------------------------------------
 
 def extract_location(loc: Any) -> str:
+    """Extracts a unified location string from various API formats."""
     if loc is None:
         return ""
     if isinstance(loc, str):
@@ -93,6 +93,7 @@ def extract_location(loc: Any) -> str:
 # ------------------------------------------------------------
 
 def normalize_level_name(level: str) -> str:
+    """Maps various level names to unified categories."""
     if not isinstance(level, str):
         return ""
     t = level.strip().lower()
@@ -110,9 +111,7 @@ def normalize_level_name(level: str) -> str:
 
 
 def detect_experience_level_from_title(title: str) -> Optional[str]:
-    """
-    Определяет уровень опыта по job_title.
-    """
+    """Detects experience level based on job_title keywords."""
     if not isinstance(title, str) or not title.strip():
         return None
 
@@ -134,9 +133,7 @@ def detect_experience_level_from_title(title: str) -> Optional[str]:
 
 
 def detect_experience_level_from_text(text: str) -> Optional[str]:
-    """
-    Определяет уровень опыта по текстовым паттернам.
-    """
+    """Detects experience level using regex patterns in text."""
     if not isinstance(text, str) or not text.strip():
         return None
 
@@ -161,8 +158,8 @@ def detect_experience_level_from_text(text: str) -> Optional[str]:
 
 def classify_experience(text: str) -> str:
     """
-    Семантическая классификация уровня опыта.
-    Возвращает: junior / mid / senior / lead
+    Semantic classification of experience level.
+    Returns: junior / mid / senior / lead
     """
     if not isinstance(text, str) or not text.strip():
         return "mid"
@@ -174,7 +171,7 @@ def classify_experience(text: str) -> str:
         if re.search(pattern, text_lower):
             return level.lower()
 
-    # 2. Semantic signals
+    # 2. Semantic scoring
     semantic_signals = {
         "lead": {
             "qualifizierung": 2,
@@ -251,6 +248,7 @@ def classify_experience(text: str) -> str:
 # ------------------------------------------------------------
 
 def normalize_aa_item(item: Dict[str, Any], search_term: str) -> Optional[Dict[str, Any]]:
+    """Full normalization pipeline for a single BA vacancy."""
     try:
         job_title = (item.get("titel") or "").strip()
         beruf = (item.get("beruf") or item.get("berufsbezeichnung") or "").strip()

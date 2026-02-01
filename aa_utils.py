@@ -1,13 +1,26 @@
+"""
+aa_utils.py
+-----------------
+Utility functions used across analytics and normalization modules.
+
+Includes:
+- save_plot(): unified plot saving helper
+- add_value_labels(): bar chart value annotations
+- parse_location_field(): robust parsing of the 'location' field from the
+  Arbeitsagentur API into structured components (index, city, state, country, address)
+"""
+
 import os
 import re
 import matplotlib.pyplot as plt
 
 
 # ------------------------------------------------------------
-# Вспомогательная функция для сохранения графиков
+# Plot saving helper
 # ------------------------------------------------------------
 
 def save_plot(name: str):
+    """Saves a plot into AA_output/analytics with consistent formatting."""
     os.makedirs("AA_output/analytics", exist_ok=True)
     plt.tight_layout()
     plt.savefig(f"AA_output/analytics/{name}.png", dpi=300)
@@ -15,12 +28,19 @@ def save_plot(name: str):
 
 
 # ------------------------------------------------------------
-# Подписи значений на графиках
+# Value labels for bar charts
 # ------------------------------------------------------------
 
 def add_value_labels(ax, spacing=5, fontsize=8):
+    """
+    Adds numeric labels to bars in a barplot.
+
+    Automatically detects orientation:
+    - vertical bars → label above the bar
+    - horizontal bars → label to the right of the bar
+    """
     for p in ax.patches:
-        if p.get_height() > p.get_width():  # вертикальный barplot
+        if p.get_height() > p.get_width():  # vertical barplot
             value = p.get_height()
             if value >= 1:
                 ax.annotate(
@@ -32,7 +52,7 @@ def add_value_labels(ax, spacing=5, fontsize=8):
                     xytext=(0, spacing),
                     textcoords="offset points"
                 )
-        else:  # горизонтальный barplot
+        else:  # horizontal barplot
             value = p.get_width()
             if value >= 1:
                 ax.annotate(
@@ -47,7 +67,7 @@ def add_value_labels(ax, spacing=5, fontsize=8):
 
 
 # ------------------------------------------------------------
-# Парсинг строки из поля 'location'
+# Parsing the 'location' field
 # ------------------------------------------------------------
 
 GERMAN_STATES = {
@@ -62,47 +82,48 @@ CITY_STATES = {"berlin", "hamburg", "bremen"}
 
 def parse_location_field(location: str) -> dict:
     """
-    Нормализует строку из поля 'location' (Arbeitsagentur API) и извлекает:
-    - index   — почтовый индекс (5 цифр)
-    - city    — город
-    - state   — федеральная земля Германии
-    - country — страна
-    - address — улица/дом (если есть)
+    Normalizes the 'location' string from the Arbeitsagentur API and extracts:
 
-    Логика:
-    1. Удаляются элементы 'null'.
-    2. Каждый элемент классифицируется:
-       - 5 цифр подряд → index
-       - одно из 16 земель → state
+    - index   — postal code (5 digits)
+    - city    — city name
+    - state   — German federal state
+    - country — country
+    - address — street/house (if present)
+
+    Logic:
+    1. Removes 'null' elements.
+    2. Each element is classified:
+       - 5 digits → index
+       - one of the 16 German states → state
        - 'Deutschland' → country
-       - строка с цифрами+буквами или типичным окончанием улицы → address
-    3. city = первый элемент, который не попал в index/state/country/address.
-    4. Для городов‑земель (Berlin, Hamburg, Bremen):
+       - strings containing digits+letters or typical street suffixes → address
+    3. city = first element not classified as index/state/country/address.
+    4. For city-states (Berlin, Hamburg, Bremen):
        city = state.
-    5. Если исходная строка заканчивалась на 'null':
-       address = 'unknown'.
-    6. Все отсутствующие значения → 'unknown'.
+    5. If original string ended with 'null':
+       address = 'Unknown'.
+    6. Missing values → 'Unknown'.
 
-    Функция устойчива к строкам длиной от 1 до 6 элементов и корректно
-    обрабатывает реальные кейсы Arbeitsagentur.
+    The function is robust to strings of length 1–6 and handles real-world
+    Arbeitsagentur cases reliably.
     """
 
-    # Базовый результат
+    # Base result
     result = {k: None for k in ["index", "city", "state", "country", "address"]}
 
-    # Пустой ввод
+    # Empty input
     if not isinstance(location, str) or not location.strip():
-        return {k: "unknown" for k in result}
+        return {k: "Unknown" for k in result}
 
-    # Разбивка и очистка
+    # Split and clean
     raw_parts = [p.strip() for p in location.split(",") if p.strip()]
     had_null_at_end = raw_parts and raw_parts[-1].lower() == "null"
     parts = [p for p in raw_parts if p.lower() != "null"]
 
     if not parts:
-        return {k: "unknown" for k in result}
+        return {k: "Unknown" for k in result}
 
-    # --- Классификаторы ---
+    # --- Classifiers ---
     def is_index(s): return bool(re.fullmatch(r"\d{5}", s))
     def is_country(s): return s.lower() == "deutschland"
     def is_state(s): return s.lower() in GERMAN_STATES
@@ -113,7 +134,7 @@ def parse_location_field(location: str) -> dict:
             return True
         return False
 
-    # --- Этап 1: классификация index/state/country/address ---
+    # --- Step 1: classify index/state/country/address ---
     for p in parts:
         low = p.lower()
         if result["index"] is None and is_index(p):
@@ -125,22 +146,22 @@ def parse_location_field(location: str) -> dict:
         elif result["address"] is None and is_address(p):
             result["address"] = p
 
-    # --- Этап 2: city = первый неклассифицированный элемент ---
+    # --- Step 2: city = first unclassified element ---
     classified_values = {v for v in result.values() if v is not None}
     for p in parts:
         if p not in classified_values:
             result["city"] = p
             break
 
-    # --- Город‑земля ---
+    # --- City-states ---
     if result["state"] and result["state"].lower() in CITY_STATES:
         result["city"] = result["state"]
 
-    # --- Если null был в конце → адрес отсутствует ---
+    # --- If null was at the end → address missing ---
     if had_null_at_end:
         result["address"] = "Unknown"
 
-    # --- None → unknown ---
+    # --- None → Unknown ---
     for k in result:
         if result[k] is None:
             result[k] = "Unknown"

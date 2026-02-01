@@ -1,23 +1,24 @@
 """
 aa_config.py
 -----------------
-Глобальная конфигурация проекта:
+Global project configuration:
 
-1. Основные параметры выгрузки
-2. Пути и директории
-3. API параметры
-4. Логирование
-5. Навыки (hard / soft)
-6. Определение уровня опыта (regex, semantic, title-based)
-7. География (Bundesländer)
+1. Core ETL parameters
+2. Paths and directories
+3. API settings
+4. Logging configuration
+5. Skills (hard / soft)
+6. Experience level detection (regex, semantic, title-based)
+7. Geography (German federal states)
 """
+
 
 from pathlib import Path
 from typing import Dict, List
 
 
 # ============================================================
-# 1. Основные параметры выгрузки
+# 1. Core ETL parameters
 # ============================================================
 
 SEARCH_TERMS: List[str] = [
@@ -43,7 +44,7 @@ SLEEP_BETWEEN: float = 0.8
 
 
 # ============================================================
-# 2. Пути и директории
+# 2. Paths and directories
 # ============================================================
 
 OUT_DIR: Path = Path("AA_output")
@@ -59,7 +60,7 @@ BAD_LOG_PATH: Path = OUT_DIR / "bad_items.log"
 
 
 # ============================================================
-# 3. API параметры
+# 3. API settings
 # ============================================================
 
 AA_BASE_URL: str = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/jobs"
@@ -69,7 +70,7 @@ AA_HEADERS: Dict[str, str] = {
 
 
 # ============================================================
-# 4. Настройки логирования
+# 4. Logging configuration
 # ============================================================
 
 LOG_LEVEL: str = "INFO"
@@ -77,7 +78,7 @@ LOG_FORMAT: str = "%(asctime)s [%(levelname)s] %(message)s"
 
 
 # ============================================================
-# 5. Навыки (регулярные выражения → нормализованные названия)
+# 5. Skills (regex → normalized names)
 # ============================================================
 
 HARD_SKILLS_DICT: Dict[str, str] = {
@@ -138,10 +139,10 @@ SOFT_SKILLS_DICT: Dict[str, str] = {
 
 
 # ============================================================
-# 6. Определение уровня опыта
+# 6. Experience level detection
 # ============================================================
 
-# --- Regex-паттерны ---
+# --- Regex patterns ---
 EXPERIENCE_LEVEL_PATTERNS: Dict[str, str] = {
     r"\bjunior\b|\beinsteiger\b": "Junior",
     r"\bmid(dle)?\b|\bprofessional\b": "Mid",
@@ -149,10 +150,10 @@ EXPERIENCE_LEVEL_PATTERNS: Dict[str, str] = {
     r"\blead\b|\bprincipal\b|\bmanager\b": "Lead",
 }
 
-# Порядок старшинства
+# Seniority order
 EXPERIENCE_LEVEL_ORDER = ["Junior", "Mid", "Senior", "Lead"]
 
-# Маппинг в классы
+# Mapping to classes
 LEVEL_TO_CLASS = {
     "Junior": "entry",
     "Mid": "entry",
@@ -179,7 +180,7 @@ TITLE_ADVANCED_KEYWORDS = [
 
 
 # ============================================================
-# 7. География: Bundesländer
+# 7. Geography: German federal states
 # ============================================================
 
 GERMAN_STATES = {

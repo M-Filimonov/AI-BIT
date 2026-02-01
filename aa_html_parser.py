@@ -1,18 +1,18 @@
 """
 aa_html_parser.py
 ---------------------
-HTML‑парсер для страниц Arbeitsagentur.
-- Извлечение секций по <h2>/<h3>
-- Извлечение секций по <strong>
-- Извлечение секций по текстовым заголовкам с двоеточием
-- Игнорирование мусора до первой секции
-- Fallback: весь текст страницы
-- Возврат структурированных секций + fallback
+HTML parser for Arbeitsagentur job detail pages.
+
+Features:
+- Extracts sections based on <h2>/<h3> headers
+- Extracts sections based on <strong> headers
+- Extracts sections based on textual titles ending with a colon
+- Ignores irrelevant content before the first meaningful section
+- Fallback: full page text if no structure is detected
+- Returns structured sections + fallback text + metadata
 """
 
 import re
-
-import time
 import requests
 from typing import Dict, List, Tuple, Optional
 from bs4 import BeautifulSoup
@@ -35,7 +35,7 @@ SECTION_TITLES = [
 
 
 # ------------------------------------------------------------
-# Кэш
+# Cache utilities
 # ------------------------------------------------------------
 
 def get_html_cache_filename(refnr: str) -> str:
@@ -63,14 +63,17 @@ def save_html_to_cache(refnr: str, html: str) -> None:
     except Exception:
         pass
 
+
 from aa_config import HTML_CACHE_DIR, EXTERNAL_CACHE_DIR
 
 def get_external_cache_filename(url: str) -> str:
     safe = re.sub(r"[^A-Za-z0-9\-]", "_", url)
     return f"{safe}.html"
 
+
 def external_cache_path(url: str):
     return EXTERNAL_CACHE_DIR / get_external_cache_filename(url)
+
 
 def load_external_from_cache(url: str) -> Optional[str]:
     path = external_cache_path(url)
@@ -81,6 +84,7 @@ def load_external_from_cache(url: str) -> Optional[str]:
             return None
     return None
 
+
 def save_external_to_cache(url: str, html: str) -> None:
     try:
         external_cache_path(url).write_text(html, encoding="utf-8", errors="ignore")
@@ -89,7 +93,7 @@ def save_external_to_cache(url: str, html: str) -> None:
 
 
 # ------------------------------------------------------------
-# Основной парсер
+# Main parser
 # ------------------------------------------------------------
 
 def fetch_description_from_site(
@@ -98,24 +102,24 @@ def fetch_description_from_site(
     Optional[str], List[str], Dict[str, str], Optional[str], Optional[str], str, str
 ]:
     """
-    Возвращает:
-        html_full: структурированное описание (если есть)
-        skills_found: навыки из HTML
-        sections_dict: словарь секций
-        sections_text: текст секций
-        html_raw_text: fallback-текст
+    Returns:
+        html_full: structured HTML description (if extracted)
+        skills_found: skills extracted from HTML
+        sections_dict: dictionary of extracted sections
+        sections_text: plain-text representation of sections
+        html_raw_text: fallback raw text
         html_quality: structured / unstructured / external / empty
-        html_filename: имя файла в кэше (BA или партнёр)
+        html_filename: cache filename (BA or external partner)
     """
 
     if not refnr:
         return None, [], {}, None, None, "empty", ""
 
-    # имя BA-файла
+    # BA cache filename
     html_filename_ba = get_html_cache_filename(refnr)
 
     # --------------------------------------------------------
-    # 0) Загрузка HTML BA из кэша или с сайта
+    # 0) Load BA HTML from cache or fetch from website
     # --------------------------------------------------------
     html = load_html_from_cache(refnr)
     if html is None:
@@ -132,16 +136,16 @@ def fetch_description_from_site(
     soup = BeautifulSoup(html, "html.parser")
 
     # --------------------------------------------------------
-    # 1) PRIORITY: если есть внешняя ссылка BA → ВСЕГДА парсим партнёра
+    # 1) PRIORITY: if BA page contains an external link → ALWAYS parse partner site
     # --------------------------------------------------------
     external_btn = soup.find("a", id="detail-beschreibung-externe-url-btn")
     if external_btn and external_btn.has_attr("href"):
         external_url = external_btn["href"].strip()
 
-        # имя файла партнёра
+        # external cache filename
         external_filename = get_external_cache_filename(external_url)
 
-        # 1.1) кэш
+        # 1.1) cache
         cached_ext = load_external_from_cache(external_url)
         if cached_ext:
             soup_ext = BeautifulSoup(cached_ext, "html.parser")
@@ -149,7 +153,7 @@ def fetch_description_from_site(
             hard, soft, level = extract_skills_and_level(raw_text)
             return None, sorted(hard), {}, None, raw_text, "external", external_filename
 
-        # 1.2) requests
+        # 1.2) direct request
         try:
             r_ext = requests.get(external_url, timeout=10)
             if r_ext.status_code == 200 and len(r_ext.text) > 500:
@@ -163,7 +167,7 @@ def fetch_description_from_site(
         if not html_ext:
             html_ext = fetch_external_html_selenium(external_url)
 
-        # 1.4) если получили HTML → сохраняем и возвращаем
+        # 1.4) save + return
         if html_ext:
             save_external_to_cache(external_url, html_ext)
             soup_ext = BeautifulSoup(html_ext, "html.parser")
@@ -172,7 +176,7 @@ def fetch_description_from_site(
             return None, sorted(hard), {}, None, raw_text, "external", external_filename
 
     # --------------------------------------------------------
-    # 2) Попытка извлечь секции по <h2>/<h3>
+    # 2) Attempt extraction via <h2>/<h3> sections
     # --------------------------------------------------------
     sections_dict = {}
     skills_found = set()
@@ -210,7 +214,7 @@ def fetch_description_from_site(
         return html_full, sorted(skills_found), sections_dict, sections_text, html_raw_text, "structured", html_filename_ba
 
     # --------------------------------------------------------
-    # 3) Попытка извлечь секции по <strong>
+    # 3) Attempt extraction via <strong> headers
     # --------------------------------------------------------
     strongs = soup.find_all("strong")
     for s in strongs:
@@ -237,7 +241,7 @@ def fetch_description_from_site(
         return html_full, sorted(skills_found), sections_dict, sections_text, html_raw_text, "structured", html_filename_ba
 
     # --------------------------------------------------------
-    # 4) Попытка извлечь секции по заголовкам с двоеточием
+    # 4) Attempt extraction via colon-based section titles
     # --------------------------------------------------------
     raw_text = soup.get_text(separator="\n")
     lines = [l.strip() for l in raw_text.split("\n") if l.strip()]
@@ -266,7 +270,7 @@ def fetch_description_from_site(
         return html_full, sorted(skills_found), sections_dict, sections_text, raw_text, "structured", html_filename_ba
 
     # --------------------------------------------------------
-    # 5) Fallback: весь текст страницы
+    # 5) Fallback: full page text
     # --------------------------------------------------------
     html_raw_text = raw_text.strip()
     if html_raw_text:
@@ -275,15 +279,14 @@ def fetch_description_from_site(
         return None, sorted(skills_found), {}, None, html_raw_text, "unstructured", html_filename_ba
 
     # --------------------------------------------------------
-    # 6) HTML пустой
+    # 6) Empty HTML
     # --------------------------------------------------------
     return None, [], {}, None, None, "empty", html_filename_ba
 
 
-
-    # --------------------------------------------------------
-    # fetch_external_html_selenium
-    # --------------------------------------------------------
+# ------------------------------------------------------------
+# Selenium fallback for external partner sites
+# ------------------------------------------------------------
 def fetch_external_html_selenium(url: str, wait_time: int = 5) -> Optional[str]:
     from selenium import webdriver
     from selenium.webdriver.chrome.options import Options
@@ -326,7 +329,7 @@ def fetch_external_html_selenium(url: str, wait_time: int = 5) -> Optional[str]:
 
         driver.get(url)
 
-        # Быстрый клик по cookies
+        # quick cookie acceptance
         cookie_selectors = [
             "button#onetrust-accept-btn-handler",
             "button[aria-label='Accept cookies']",
@@ -340,7 +343,7 @@ def fetch_external_html_selenium(url: str, wait_time: int = 5) -> Optional[str]:
             except:
                 pass
 
-        # Ждём загрузки DOM
+        # wait for DOM load
         WebDriverWait(driver, 3).until(
             lambda d: d.execute_script("return document.readyState") == "complete"
         )
@@ -351,4 +354,3 @@ def fetch_external_html_selenium(url: str, wait_time: int = 5) -> Optional[str]:
 
     except Exception:
         return None
-

@@ -1,9 +1,9 @@
 """
 aa_skills.py
 -----------------
-Функции для извлечения навыков (hard/soft skills) и уровня опыта из текста.
-Использует словари из aa_config.py.
-Также содержит функцию очистки HTML-тегов из текста.
+Functions for extracting hard/soft skills and experience level from text.
+Uses skill dictionaries defined in aa_config.py.
+Also includes a helper for cleaning HTML tags from text.
 """
 
 import re
@@ -13,13 +13,21 @@ from bs4 import BeautifulSoup
 from aa_config import HARD_SKILLS_DICT, SOFT_SKILLS_DICT, EXPERIENCE_LEVEL_PATTERNS
 
 
-
 def extract_skills_and_level(text: str) -> Tuple[List[str], List[str], Optional[str]]:
     """
-    Извлекает hard skills, soft skills и уровень опыта из текста.
-    ГАРАНТИРУЕТ возврат tuple (hard_list, soft_list, level_str_or_None).
+    Extracts hard skills, soft skills, and experience level from text.
+    GUARANTEES returning a tuple: (hard_list, soft_list, level_str_or_None).
+
+    Args:
+        text (str): Input text from vacancy description.
+
+    Returns:
+        Tuple[List[str], List[str], Optional[str]]:
+            - hard skills (sorted list)
+            - soft skills (sorted list)
+            - experience level (string or None)
     """
-    # Полная защита от None, чисел, списков и т.п.
+    # Full protection against None, numbers, lists, etc.
     if not isinstance(text, str) or not text.strip():
         return [], [], None
 
@@ -35,7 +43,7 @@ def extract_skills_and_level(text: str) -> Tuple[List[str], List[str], Optional[
             if re.search(pattern, txt):
                 hard.add(name)
         except re.error:
-            # если паттерн некорректный — пропускаем
+            # skip invalid regex patterns
             continue
 
     # -----------------------------
@@ -59,12 +67,12 @@ def extract_skills_and_level(text: str) -> Tuple[List[str], List[str], Optional[
             continue
 
     # -----------------------------
-    # Гарантируем корректный tuple
+    # Final tuple normalization
     # -----------------------------
     hard_list = sorted(hard)
     soft_list = sorted(soft)
 
-    # level всегда либо строка, либо None
+    # level is always either a string or None
     if level is not None:
         level = str(level).lower().strip()
 
