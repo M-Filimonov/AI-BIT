@@ -42,7 +42,7 @@ The project fetches, parses, normalizes, enriches, and analyzes job postings, pr
 ## Project Structure
 
 ```text
-AA-BIT/
+AI-BIT/
 ├── aa_main.py             # Main script
 ├── aa_config.py           # Global configuration, skill dictionaries, experience rules
 ├── aa_api_client.py       # Client for interacting with the Arbeitsagentur (BA) API
