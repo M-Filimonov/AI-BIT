@@ -1,0 +1,24 @@
+pandas
+numpy
+requests
+beautifulsoup4
+lxml
+python-dotenv
+
+matplotlib
+seaborn
+plotly
+kaleido
+
+scikit-learn
+
+geopy
+folium
+shapely
+pyproj
+
+openpyxl
+
+# Optional (only if you use Selenium fallback)
+selenium
+webdriver-manager
