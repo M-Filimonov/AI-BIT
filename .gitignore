@@ -1,61 +1,32 @@
-# -------------------------
 # Python cache
-# -------------------------
 __pycache__/
 *.py[cod]
 
-# -------------------------
-# Jupyter
-# -------------------------
+# Jupyter checkpoints
 .ipynb_checkpoints/
 *.ipynb
 
-# -------------------------
 # Virtual environments
-# -------------------------
 venv/
 .venv/
 env/
+.env/
 
-# -------------------------
-# Secrets
-# -------------------------
-.env
-
-# -------------------------
-# PyCharm / JetBrains
-# -------------------------
+# PyCharm
 .idea/
 
-# -------------------------
-# Build artifacts
-# -------------------------
-build/
-dist/
-*.egg-info/
-
-# -------------------------
-# Logs
-# -------------------------
-*.log
-logs/
-
-# -------------------------
 # Output artifacts
-# -------------------------
-backup_RU/
-DOC/
-html_cache/
 AA_output/
+other/
+other/*.joblib
+other/*.ipynb
+DDC/
+html_cache/
 
-# -------------------------
+# Secrets
+.env
+
+
 # OS files
-# -------------------------
 .DS_Store
 Thumbs.db
-
-# -------------------------
-# Editor temp files
-# -------------------------
-*.swp
-*.swo
